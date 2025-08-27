@@ -7,5 +7,17 @@ import json
 from datetime import datetime
 
 class PaperClipZ:
-    pass
+    def __init__(self):
+        pass
 
+    def _load_history(self):
+        pass
+
+    def _save_history(self):
+        pass
+
+    def _add_entry(self, text):
+        pass
+
+    def run(self):
+        pass
