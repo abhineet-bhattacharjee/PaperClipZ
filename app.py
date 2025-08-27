@@ -24,7 +24,7 @@ class PaperClipZ:
                 return []
 
     def _save_history(self) -> None:
-        with open(self.history_file, '', encoding='utf-8') as f:
+        with open(self.history_file, 'w', encoding='utf-8') as f:
             json.dump(self.history, f, ensure_ascii=False, indent=4)
 
     def _add_entry(self, text) -> None:
@@ -47,3 +47,4 @@ class PaperClipZ:
                 time.sleep(self.interval)
         except KeyboardInterrupt:
             print('\n🛑 Clipboard logger stopped.')
+
