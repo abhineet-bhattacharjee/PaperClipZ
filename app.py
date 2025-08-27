@@ -37,7 +37,7 @@ class PaperClipZ:
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
     def run(self) -> None:
-        print('📋 Clipboard logger started... (Ctrl+C to stop)')
+        print('📋 Clipboard logger started... (Ctrl+C to trigger)')
         try:
             while True:
                 text: str = pyperclip.paste()
@@ -47,4 +47,5 @@ class PaperClipZ:
                 time.sleep(self.interval)
         except KeyboardInterrupt:
             print('\n🛑 Clipboard logger stopped.')
+
 
