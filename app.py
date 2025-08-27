@@ -38,9 +38,12 @@ class PaperClipZ:
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to stop)')
-        while True:
-            text: str = pyperclip.paste()
-            if text and text != self.last_text:
-                self._add_entry(text)
-                self.last_text = text
-            time.sleep(self.interval)
+        try:
+            while True:
+                text: str = pyperclip.paste()
+                if text and text != self.last_text:
+                    self._add_entry(text)
+                    self.last_text = text
+                time.sleep(self.interval)
+        except KeyboardInterrupt:
+            print('\n🛑 Clipboard logger stopped.')
