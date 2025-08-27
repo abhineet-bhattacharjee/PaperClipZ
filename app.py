@@ -36,7 +36,7 @@ class PaperClipZ:
         self._save_history()
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
-    def run(self):
+    def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to stop)')
         while True:
             text: str = pyperclip.paste()
