@@ -13,7 +13,8 @@ class PaperClipZ:
 
 
     def _load_history(self):
-        pass
+        with open(self.history_file, 'r', encoding='utf-8') as f:
+            return json.load(f)
 
     def _save_history(self):
         pass
