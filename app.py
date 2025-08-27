@@ -23,7 +23,8 @@ class PaperClipZ:
                 return []
 
     def _save_history(self):
-        pass
+        with open(self.history_file, '', encoding='utf-8') as f:
+            json.dump(self.history, f, ensure_ascii=False, indent=4)
 
     def _add_entry(self, text):
         pass
