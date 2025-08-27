@@ -14,7 +14,10 @@ class PaperClipZ:
 
     def _load_history(self) -> list[dict]:
         with open(self.history_file, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            try :
+                return json.load(f)
+            except json.JSONDecodeError:
+                return []
 
     def _save_history(self):
         pass
