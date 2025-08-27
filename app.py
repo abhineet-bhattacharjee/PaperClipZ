@@ -12,6 +12,7 @@ class PaperClipZ:
         self.history_file: str = history_file
         self.interval: float = interval
         self.history: list[dict] = self._load_history()
+        self.last_text = ''
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
@@ -36,4 +37,10 @@ class PaperClipZ:
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
     def run(self):
-        pass
+        print('📋 Clipboard logger started... (Ctrl+C to stop)')
+        while True:
+            text: str = pyperclip.paste()
+            if text and text != self.last_text:
+                self._add_entry(text)
+                self.last_text = text
+            time.sleep(self.interval)
