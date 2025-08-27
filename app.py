@@ -26,7 +26,7 @@ class PaperClipZ:
         with open(self.history_file, '', encoding='utf-8') as f:
             json.dump(self.history, f, ensure_ascii=False, indent=4)
 
-    def _add_entry(self, text):
+    def _add_entry(self, text) -> None:
         entry = {
             'text': text,
             'timestamp': datetime.now().isoformat(timespec='seconds')
