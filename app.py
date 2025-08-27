@@ -27,7 +27,13 @@ class PaperClipZ:
             json.dump(self.history, f, ensure_ascii=False, indent=4)
 
     def _add_entry(self, text):
-        pass
+        entry = {
+            'text': text,
+            'timestamp': datetime.now().isoformat(timespec='seconds')
+        }
+        self.history.append(entry)
+        self._save_history()
+        print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
     def run(self):
         pass
