@@ -6,17 +6,17 @@ import time
 import json
 from datetime import datetime
 
+
 class PaperClipZ:
-    def __init__(self, history_file: str='history.json', interval: float=1.0) -> None:
+    def __init__(self, history_file: str = 'history.json', interval: float = 1.0) -> None:
         self.history_file: str = history_file
         self.interval: float = interval
-
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
             return []
         with open(self.history_file, 'r', encoding='utf-8') as f:
-            try :
+            try:
                 return json.load(f)
             except json.JSONDecodeError:
                 return []
