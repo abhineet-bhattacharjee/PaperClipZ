@@ -11,6 +11,7 @@ class PaperClipZ:
     def __init__(self, history_file: str = 'history.json', interval: float = 1.0) -> None:
         self.history_file: str = history_file
         self.interval: float = interval
+        self.history: list[dict] = self._load_history()
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
