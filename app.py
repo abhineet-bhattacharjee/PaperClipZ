@@ -12,7 +12,7 @@ class PaperClipZ:
         self.history_file: str = history_file
         self.interval: float = interval
         self.history: list[dict] = self._load_history()
-        self.last_text = ''
+        self.last_text: str = ''
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
