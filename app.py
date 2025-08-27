@@ -6,6 +6,6 @@ import time
 import json
 from datetime import datetime
 
+class PaperClipZ:
+    pass
 
-print(pyperclip.__version__)
-print(keyboard.__version__)
