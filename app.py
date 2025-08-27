@@ -12,7 +12,7 @@ class PaperClipZ:
         self.interval: float = interval
 
 
-    def _load_history(self):
+    def _load_history(self) -> list[dict]:
         with open(self.history_file, 'r', encoding='utf-8') as f:
             return json.load(f)
 
