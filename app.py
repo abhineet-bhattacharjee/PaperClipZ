@@ -7,8 +7,10 @@ import json
 from datetime import datetime
 
 class PaperClipZ:
-    def __init__(self, log_file: str='history.json', interval: float=1.0) -> None:
-        pass
+    def __init__(self, history_file: str='history.json', interval: float=1.0) -> None:
+        self.history_file: str = history_file
+        self.interval: float = interval
+
 
     def _load_history(self):
         pass
