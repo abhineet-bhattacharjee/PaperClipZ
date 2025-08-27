@@ -27,7 +27,7 @@ class PaperClipZ:
         with open(self.history_file, 'w', encoding='utf-8') as f:
             json.dump(self.history, f, ensure_ascii=False, indent=4)
 
-    def _add_entry(self, text) -> None:
+    def _add_entry(self, text: str) -> None:
         entry = {
             'text': text,
             'timestamp': datetime.now().isoformat(timespec='seconds')
@@ -47,5 +47,3 @@ class PaperClipZ:
                 time.sleep(self.interval)
         except KeyboardInterrupt:
             print('\n🛑 Clipboard logger stopped.')
-
-
