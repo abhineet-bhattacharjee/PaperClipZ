@@ -22,7 +22,7 @@ class PaperClipZ:
             except json.JSONDecodeError:
                 return []
 
-    def _save_history(self):
+    def _save_history(self) -> None:
         with open(self.history_file, '', encoding='utf-8') as f:
             json.dump(self.history, f, ensure_ascii=False, indent=4)
 
