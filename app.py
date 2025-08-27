@@ -13,6 +13,8 @@ class PaperClipZ:
 
 
     def _load_history(self) -> list[dict]:
+        if not os.path.exists(self.history_file):
+            return []
         with open(self.history_file, 'r', encoding='utf-8') as f:
             try :
                 return json.load(f)
