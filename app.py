@@ -55,6 +55,11 @@ class PaperClipZ:
 
         print(f'📋 Pasted [{index}]: {text_to_paste[:40]}{"..." if len(text_to_paste) > 40 else ""}')
 
+    def _hotkeys(self):
+        for i in range(1, 10):
+            keyboard.add_hotkey(f'ctrl+{i}', lambda i: self._paste_entry(i -1))
+
+
 
 
     def run(self) -> None:
