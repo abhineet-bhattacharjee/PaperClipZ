@@ -59,6 +59,7 @@ class PaperClipZ:
         for i in range(1, 10):
             keyboard.add_hotkey(f'ctrl+{i}', lambda i: self._paste_entry(i -1))
 
+        keyboard.add_hotkey('ctrl+0', lambda: self._paste_entry(9))
 
 
 
