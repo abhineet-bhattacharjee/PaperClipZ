@@ -69,6 +69,8 @@ class PaperClipZ:
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
+        self._setup_hotkeys()
+
         try:
             while True:
                 try:
