@@ -40,7 +40,7 @@ class PaperClipZ:
         }
         self.history.append(entry)
         self._save_history()
-        print(f'✔ Saved: {text[:100]}{"..." if len(text) > 100 else ""}\n')
+        print(f'✔ Save log {len(self.history)}: {text[:100]}{"..." if len(text) > 100 else ""}\n')
 
     def _paste_entry(self, index: int):
         if not self.history:
