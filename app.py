@@ -37,7 +37,7 @@ class PaperClipZ:
         }
         self.history.append(entry)
         self._save_history()
-        print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
+        print(f'✔ Saved: {text[:100]}{"..." if len(text) > 100 else ""}')
 
     def _paste_entry(self, index: int):
         if not self.history:
@@ -54,7 +54,7 @@ class PaperClipZ:
         pyperclip.copy(text_to_paste)
         keyboard.send('ctrl+v')
 
-        print(f'📋 Pasted [{index}]: {text_to_paste[:40]}{"..." if len(text_to_paste) > 40 else ""}')
+        print(f'📋 Pasted [{index}]: {text_to_paste[:100]}{"..." if len(text_to_paste) > 100 else ""}')
 
     def _hotkeys(self):
         for i in range(1, 10):
