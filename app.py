@@ -66,7 +66,7 @@ class PaperClipZ:
         print('  Ctrl+1 = Most recent')
         print('  Ctrl+2 = 2nd most recent')
         print('  ...')
-        print('  Ctrl+0 = 10th most recent')
+        print('  Ctrl+0 = 10th most recent\n')
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
