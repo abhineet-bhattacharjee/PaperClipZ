@@ -24,8 +24,11 @@ class PaperClipZ:
                 return []
 
     def _save_history(self) -> None:
-        with open(self.history_file, 'w', encoding='utf-8') as f:
-            json.dump(self.history, f, ensure_ascii=False, indent=4)
+        try:
+            with open(self.history_file, 'w', encoding='utf-8') as f:
+                json.dump(self.history, f, ensure_ascii=False, indent=4)
+        except IOError as e:
+            print(f'❌ Error saving history: {e}')
 
     def _add_entry(self, text: str) -> None:
         entry = {
