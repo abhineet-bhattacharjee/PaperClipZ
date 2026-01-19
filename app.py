@@ -60,7 +60,7 @@ class PaperClipZ:
         for i in range(1, 10):
             keyboard.add_hotkey(f'ctrl+{i}', lambda idx=i - 1: self._paste_entry(idx))
 
-        keyboard.add_hotkey('ctrl+0', lambda: self._paste_entry(9))
+        keyboard.add_hotkey('ctrl+0', lambda idx=9: self._paste_entry(idx))
 
         print('⌨ Hotkeys registered:')
         print('  Ctrl+1 = Most recent')
