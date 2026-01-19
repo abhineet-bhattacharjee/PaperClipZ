@@ -50,7 +50,10 @@ class PaperClipZ:
             print(f"⚠ Invalid index for pasting. Only {len(recent_history)} items available.")
             return
 
+        pyperclip.copy([index]['text'])
+        keyboard.send('ctrl+v')
 
+        print(f'📋 Pasted [{index}]: {text_to_paste[:40]}{"..." if len(text_to_paste) > 40 else ""}')
 
 
 
