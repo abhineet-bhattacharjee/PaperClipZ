@@ -39,12 +39,20 @@ class PaperClipZ:
         self._save_history()
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
-    def _paste_entry(self):
+    def _paste_entry(self, index: int):
         if not self.history:
             print("⚠ No history to paste from.")
             return
 
         recent_history = self.history[-10:][::-1]
+
+        if index >= len(recent_history):
+            print(f"⚠ Invalid index for pasting. Only {len(recent_history)} items available.")
+            return
+
+
+
+
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
