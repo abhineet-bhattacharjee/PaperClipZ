@@ -43,7 +43,13 @@ class PaperClipZ:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
         try:
             while True:
-                text: str = pyperclip.paste()
+                try:
+                    text: str = pyperclip.paste()
+                except:
+                    print('⚠ Clipboard access failed, retrying...')
+                    time.sleep(self.interval)
+                    continue
+
                 if text and text != self.last_text:
                     self._add_entry(text)
                     self.last_text = text
