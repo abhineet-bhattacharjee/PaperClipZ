@@ -39,6 +39,9 @@ class PaperClipZ:
         self._save_history()
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
+    def _paste_entry(self):
+        pass
+
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
         try:
