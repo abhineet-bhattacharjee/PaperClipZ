@@ -40,7 +40,9 @@ class PaperClipZ:
         print(f'✔ Saved: {text[:40]}{"..." if len(text) > 40 else ""}')
 
     def _paste_entry(self):
-        pass
+        if not self.history:
+            print("⚠ No history to paste from.")
+            return
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
@@ -59,3 +61,8 @@ class PaperClipZ:
                 time.sleep(self.interval)
         except KeyboardInterrupt:
             print('\n🛑 Clipboard logger stopped.')
+
+
+if __name__ == '__main__':
+    app = PaperClipZ()
+    app.run()
