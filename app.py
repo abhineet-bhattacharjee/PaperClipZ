@@ -63,10 +63,10 @@ class PaperClipZ:
         keyboard.add_hotkey('ctrl+0', lambda: self._paste_entry(9))
 
         print('⌨ Hotkeys registered:')
-        print('  Ctrl+Shift+1 = Most recent')
-        print('  Ctrl+Shift+2 = 2nd most recent')
+        print('  Ctrl+1 = Most recent')
+        print('  Ctrl+2 = 2nd most recent')
         print('  ...')
-        print('  Ctrl+Shift+0 = 10th most recent')
+        print('  Ctrl+0 = 10th most recent')
 
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
