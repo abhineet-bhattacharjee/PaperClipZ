@@ -44,6 +44,8 @@ class PaperClipZ:
             print("⚠ No history to paste from.")
             return
 
+        recent_history = self.history[-10:][::-1]
+
     def run(self) -> None:
         print('📋 Clipboard logger started... (Ctrl+C to trigger)')
         try:
