@@ -55,6 +55,8 @@ class PaperClipZ:
 
         text_to_paste = recent_history[index]['text']
         pyperclip.copy(text_to_paste)
+
+        self.last_text = text_to_paste
         keyboard.send('ctrl+v')
 
         print(f'📋 Pasted [{index}]: {text_to_paste[:100]}{"..." if len(text_to_paste) > 100 else ""}')
