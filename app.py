@@ -12,6 +12,7 @@ class PaperClipZ:
         self.history_file: str = history_file
         self.interval: float = interval
         self.history: list[dict] = self._load_history()
+        self.newline = True
         try:
             self.last_text: str = pyperclip.paste()
         except:
@@ -54,7 +55,7 @@ class PaperClipZ:
             return
 
         text_to_paste = recent_history[index]['text']
-        text_to_paste += '\r\n' if not text_to_paste.endswith(('\n', '\r\n')) else ''
+        text_to_paste += '\r\n' if not text_to_paste.endswith(('\n', '\r\n')) and self.newline else ''
         pyperclip.copy(text_to_paste)
 
         self.last_text = text_to_paste
