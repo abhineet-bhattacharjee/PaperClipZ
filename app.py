@@ -54,6 +54,7 @@ class PaperClipZ:
             return
 
         text_to_paste = recent_history[index]['text']
+        text_to_paste += '\r\n' if not text_to_paste.endswith(('\n', '\r\n')) else ''
         pyperclip.copy(text_to_paste)
 
         self.last_text = text_to_paste
