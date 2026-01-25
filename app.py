@@ -20,6 +20,13 @@ class PaperClipZ:
             self.last_text: str = ''
 
     def _compute_hash(self, text: str):
+        return hashlib.sha256(text.encode('utf-8')).hexdigest()
+
+    def _find_entry_by_hash(self, text_hash: str):
+        for entry in self.history:
+            if entry.get('id') == text_hash:
+                return entry
+        return None
 
 
     def _load_history(self) -> list[dict]:
