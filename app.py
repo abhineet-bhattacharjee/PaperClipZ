@@ -19,6 +19,9 @@ class PaperClipZ:
         except:
             self.last_text: str = ''
 
+    def _compute_hash(self, text: str):
+
+
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
             return []
