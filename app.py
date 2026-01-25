@@ -55,7 +55,7 @@ class PaperClipZ:
             existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
             self.history.append(existing_entry)
-            print(f'{Fore.LIGHTGREEN_EX}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
+            print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
         else:
             entry = {
                 'id': text_hash,
@@ -65,7 +65,7 @@ class PaperClipZ:
                 'copy_count': 1
             }
             self.history.append(entry)
-            print(f'{Fore.GREEN}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
+            print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
 
         self._save_history()
 
