@@ -28,7 +28,6 @@ class PaperClipZ:
                 return entry
         return None
 
-
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
             return []
@@ -46,13 +45,8 @@ class PaperClipZ:
             print(f'❌ Error saving history: {e}')
 
     def _add_entry(self, text: str) -> None:
-        entry = {
-            'text': text,
-            'timestamp': datetime.now().isoformat(timespec='seconds')
-        }
-        self.history.append(entry)
-        self._save_history()
-        print(f'✔ Save log {len(self.history)}: {text[:100]}{"..." if len(text) > 100 else ""}\n')
+        text_hash = self._compute_hash(text)
+        existing_entry = self._find_entry_by_hash(text_hash)
 
     def _paste_entry(self, index: int):
         if not self.history:
