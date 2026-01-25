@@ -49,8 +49,10 @@ class PaperClipZ:
         existing_entry = self._find_entry_by_hash(text_hash)
 
         if existing_entry:
+            self.history.remove(existing_entry)
             existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
+            self.history.append(existing_entry)
             print(f'Updated log (copied {existing_entry["copy_count"]}x): {text[:100]}{"..." if len(text) > 100 else ""}\n')
         else:
             entry = {
@@ -61,7 +63,7 @@ class PaperClipZ:
                 'copy_count': 1
             }
             self.history.append(entry)
-            print(f'✔ Save log {len(self.history)}: {text[:100]}{"..." if len(text) > 100 else ""}\n')
+            print(f'Save log {len(self.history)}: {text[:100]}{"..." if len(text) > 100 else ""}\n')
 
         self._save_history()
 
@@ -91,14 +93,14 @@ class PaperClipZ:
 
         keyboard.add_hotkey('ctrl+0', lambda idx=9: self._paste_entry(idx), suppress=True)
 
-        print('⌨ Hotkeys registered:')
+        print('Hotkeys registered:')
         print('  Ctrl+1 = Most recent')
         print('  Ctrl+2 = 2nd most recent')
         print('  ...')
         print('  Ctrl+0 = 10th most recent\n')
 
     def run(self) -> None:
-        print('📋 Clipboard logger started... (Ctrl+C to trigger)')
+        print('Clipboard logger started... (Ctrl+C to trigger)')
         self._hotkeys()
 
         try:
