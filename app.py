@@ -48,6 +48,14 @@ class PaperClipZ:
         text_hash = self._compute_hash(text)
         existing_entry = self._find_entry_by_hash(text_hash)
 
+        if existing_entry:
+            existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
+            existing_entry['copy_count'] += 1
+            print(
+                f'Updated log (copied {existing_entry["copy_count"]}x): {text[:100]}{"..." if len(text) > 100 else ""}\n')
+        else:
+            pass
+
     def _paste_entry(self, index: int):
         if not self.history:
             print("⚠ No history to paste from.")
