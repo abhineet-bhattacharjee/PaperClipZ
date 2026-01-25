@@ -42,7 +42,7 @@ class PaperClipZ:
             with open(self.history_file, 'w', encoding='utf-8') as f:
                 json.dump(self.history, f, ensure_ascii=False, indent=4)
         except IOError as e:
-            print(f'❌ Error saving history: {e}')
+            print(f'Error saving history: {e}')
 
     def _add_entry(self, text: str) -> None:
         text_hash = self._compute_hash(text)
@@ -53,7 +53,7 @@ class PaperClipZ:
             existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
             self.history.append(existing_entry)
-            print(f'Updated log (copied {existing_entry["copy_count"]}x): {text[:100]}{"..." if len(text) > 100 else ""}\n')
+            print(f'UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
         else:
             entry = {
                 'id': text_hash,
@@ -63,19 +63,19 @@ class PaperClipZ:
                 'copy_count': 1
             }
             self.history.append(entry)
-            print(f'Save log {len(self.history)}: {text[:100]}{"..." if len(text) > 100 else ""}\n')
+            print(f'SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
 
         self._save_history()
 
     def _paste_entry(self, index: int):
         if not self.history:
-            print("⚠ No history to paste from.")
+            print("No history to paste from.")
             return
 
         recent_history = self.history[-10:][::-1]
 
         if index >= len(recent_history):
-            print(f"⚠ Invalid index for pasting. Only {len(recent_history)} items available.")
+            print(f"Invalid index for pasting. Only {len(recent_history)} items available.")
             return
 
         text_to_paste = recent_history[index]['text']
@@ -85,7 +85,7 @@ class PaperClipZ:
         self.last_text = text_to_paste
         keyboard.send('ctrl+v')
 
-        print(f'📋 Pasted [{index}]: {text_to_paste[:100]}{"..." if len(text_to_paste) > 100 else ""}')
+        print(f'PASTED [{index}]: {text_to_paste.strip()[:100]}{"..." if len(text_to_paste) > 100 else ""}')
 
     def _hotkeys(self):
         for i in range(1, 10):
@@ -108,7 +108,7 @@ class PaperClipZ:
                 try:
                     text: str = pyperclip.paste()
                 except:
-                    print('⚠ Clipboard access failed, retrying...')
+                    print('Clipboard access failed, retrying...')
                     time.sleep(self.interval)
                     continue
 
@@ -117,7 +117,7 @@ class PaperClipZ:
                     self.last_text = text
                 time.sleep(self.interval)
         except KeyboardInterrupt:
-            print('\n🛑 Clipboard logger stopped.')
+            print('\nClipboard logger stopped.')
 
 
 if __name__ == '__main__':
