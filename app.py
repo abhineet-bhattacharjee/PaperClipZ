@@ -6,6 +6,7 @@ import time
 import json
 import hashlib
 from datetime import datetime
+from colorama import init, Fore, Style
 
 
 class PaperClipZ:
