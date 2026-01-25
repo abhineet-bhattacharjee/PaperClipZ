@@ -11,6 +11,7 @@ from colorama import init, Fore, Style
 
 class PaperClipZ:
     def __init__(self, history_file: str = 'history.json', interval: float = 1.0) -> None:
+        init(autoreset=True)
         self.history_file: str = history_file
         self.interval: float = interval
         self.history: list[dict] = self._load_history()
