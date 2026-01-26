@@ -114,6 +114,15 @@ class PaperClipZ:
         pyperclip.copy(text_to_paste)
 
         self.last_text = text_to_paste
+
+        entry_id = recent_history[index]['id']
+        for entry in self.history:
+            if entry['id'] == entry_id:
+                entry['last_used'] = datetime.now().isoformat(timespec='seconds')
+                break
+
+        self._save_history()
+
         keyboard.send('ctrl+v')
 
         print(f'{Fore.BLUE}PASTED [{index}]: {text_to_paste.strip()[:100]}{"..." if len(text_to_paste) > 100 else ""}')
