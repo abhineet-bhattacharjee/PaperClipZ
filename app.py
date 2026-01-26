@@ -17,7 +17,7 @@ class PaperClipZ:
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_used')
-        self.newline = config.get('newline', True)
+        self.newline: bool = config.get('newline', True)
         self.history: list[dict] = self._load_history()
 
         try:
