@@ -103,7 +103,7 @@ class PaperClipZ:
             print(f"{Fore.RED}No history to paste from.")
             return
 
-        recent_history = self.history[-10:][::-1]
+        recent_history = self._sort_items(limit=10)
 
         if index >= len(recent_history):
             print(f"{Fore.YELLOW}Invalid index for pasting. Only {len(recent_history)} items available.")
