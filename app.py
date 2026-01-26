@@ -17,7 +17,7 @@ class PaperClipZ:
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.history: list[dict] = self._load_history()
-        self.newline = True
+        self.newline = config.get('newline', True)
         try:
             self.last_text: str = pyperclip.paste()
         except:
