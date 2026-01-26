@@ -21,6 +21,9 @@ class PaperClipZ:
         except:
             self.last_text: str = ''
 
+    def _load_config(self, config_file: str):
+        pass
+
     def _compute_hash(self, text: str):
         return hashlib.sha256(text.encode('utf-8')).hexdigest()
 
