@@ -48,7 +48,16 @@ class PaperClipZ:
         if self.sort_mode == 'last_copied':
             return self.history[-limit:][::-1]
         else:
-            pass
+            sorted_history = sorted(
+                self.history,
+                key=lambda entry: (
+                    entry.get('last_used', ''),
+                    entry.get('copy_count', 0),
+                    entry.get('created_at', ''),
+                ),
+                reverse=True
+            )
+            return sorted_history[:limit]
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
