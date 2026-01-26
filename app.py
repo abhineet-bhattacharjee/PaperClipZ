@@ -22,7 +22,14 @@ class PaperClipZ:
             self.last_text: str = ''
 
     def _load_config(self, config_file: str):
-        pass
+        if not os.path.exists(config_file):
+            return {}
+
+        try:
+            with open(config_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except:
+            return {}
 
     def _compute_hash(self, text: str):
         return hashlib.sha256(text.encode('utf-8')).hexdigest()
