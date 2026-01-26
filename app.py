@@ -45,7 +45,10 @@ class PaperClipZ:
         return None
 
     def _sort_items(self, limit: int = 10):
-        pass
+        if self.sort_mode == 'last_copied':
+            return self.history[-limit:][::-1]
+        else:
+            pass
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
