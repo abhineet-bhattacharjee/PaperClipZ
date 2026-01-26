@@ -44,6 +44,9 @@ class PaperClipZ:
                 return entry
         return None
 
+    def _sort_items(self, limit: int = 10):
+        pass
+
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
             return []
