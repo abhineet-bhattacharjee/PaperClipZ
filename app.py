@@ -51,6 +51,16 @@ class PaperClipZ:
         last_pasted = entry.get('last_pasted_at')
         last_copied = entry.get('last_copied_at', entry.get('created_at'))
 
+        last_activity = last_pasted if last_pasted else last_copied
+
+        if last_activity:
+            last_activity_time = datetime.fromisoformat(last_activity)
+            hours_ago = (now - last_activity_time).total_seconds() / 3600
+
+            recency_score = math.exp(-hours_ago / 24)
+        else:
+            recency_score = 0.0
+
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
             return self.history[-limit:][::-1]
