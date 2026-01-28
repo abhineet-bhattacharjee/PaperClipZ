@@ -48,6 +48,9 @@ class PaperClipZ:
     def _calculate_score(self, entry: dict):
         now = datetime.now()
 
+        last_pasted = entry.get('last_pasted_at')
+        last_copied = entry.get('last_copied_at', entry.get('created_at'))
+
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
             return self.history[-limit:][::-1]
