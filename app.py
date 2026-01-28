@@ -108,9 +108,6 @@ class PaperClipZ:
 
         recent_history = self._sort_items(limit=10)
 
-        print(f"DEBUG: Pasting index {index}")
-        print(f"DEBUG: Item text: {recent_history[index]['text'][:50]}")
-
         if index >= len(recent_history):
             print(f"{Fore.YELLOW}Invalid index for pasting. Only {len(recent_history)} items available.")
             return
