@@ -121,7 +121,8 @@ class PaperClipZ:
         entry_id = recent_history[index]['id']
         for entry in self.history:
             if entry['id'] == entry_id:
-                entry['last_used'] = datetime.now().isoformat(timespec='seconds')
+                entry['last_pasted_at'] = datetime.now().isoformat(timespec='seconds')
+                entry['paste_count'] = entry.get('paste_count', 0) + 1
                 break
 
         self._save_history()
