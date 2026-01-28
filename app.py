@@ -70,7 +70,11 @@ class PaperClipZ:
 
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
-            return self.history[-limit:][::-1]
+            sorted_history = sorted(
+                self.history,
+                key=lambda entry: entry.get('last_copied_at', entry.get('created_at'), ''),
+                reverse=True
+            )
         else:
             sorted_history = sorted(
                 self.history,
