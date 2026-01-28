@@ -46,7 +46,7 @@ class PaperClipZ:
         return None
 
     def _calculate_score(self, entry: dict):
-        ...
+        now = datetime.now()
 
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
