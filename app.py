@@ -83,6 +83,7 @@ class PaperClipZ:
             self.history.remove(existing_entry)
             existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
+
             self.history.append(existing_entry)
             print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
         else:
@@ -90,8 +91,10 @@ class PaperClipZ:
                 'id': text_hash,
                 'text': text,
                 'created_at': datetime.now().isoformat(timespec='seconds'),
-                'last_used': datetime.now().isoformat(timespec='seconds'),
-                'copy_count': 1
+                'last_copied_at': datetime.now().isoformat(timespec='seconds'),
+                'last_pasted_at': None,
+                'copy_count': 1,
+                'paste_count': 0
             }
             self.history.append(entry)
             print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
@@ -105,15 +108,18 @@ class PaperClipZ:
 
         recent_history = self._sort_items(limit=10)
 
+        print(f"DEBUG: Pasting index {index}")
+        print(f"DEBUG: Item text: {recent_history[index]['text'][:50]}")
+
         if index >= len(recent_history):
             print(f"{Fore.YELLOW}Invalid index for pasting. Only {len(recent_history)} items available.")
             return
 
         text_to_paste = recent_history[index]['text']
         text_to_paste += '\r\n' if not text_to_paste.endswith(('\n', '\r\n')) and self.newline else ''
-        pyperclip.copy(text_to_paste)
 
         self.last_text = text_to_paste
+        pyperclip.copy(text_to_paste)
 
         entry_id = recent_history[index]['id']
         for entry in self.history:
