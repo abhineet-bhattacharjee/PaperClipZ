@@ -61,6 +61,10 @@ class PaperClipZ:
         else:
             recency_score = 0.0
 
+        paste_count = entry.get('paste_count', 0)
+        frequency_score = math.log(paste_count + 1)
+
+
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
             return self.history[-limit:][::-1]
