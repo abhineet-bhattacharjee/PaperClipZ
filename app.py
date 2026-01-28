@@ -64,6 +64,9 @@ class PaperClipZ:
         paste_count = entry.get('paste_count', 0)
         frequency_score = math.log(paste_count + 1)
 
+        total_score = (recency_score * 10) + (frequency_score * 1)
+
+        return total_score
 
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
