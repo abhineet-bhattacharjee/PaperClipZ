@@ -78,11 +78,7 @@ class PaperClipZ:
         else:
             sorted_history = sorted(
                 self.history,
-                key=lambda entry: (
-                    entry.get('last_used', ''),
-                    entry.get('copy_count', 0),
-                    entry.get('created_at', ''),
-                ),
+                key=lambda entry: self._calculate_score(entry),
                 reverse=True
             )
             return sorted_history[:limit]
