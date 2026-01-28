@@ -45,6 +45,9 @@ class PaperClipZ:
                 return entry
         return None
 
+    def _calculate_score(self, entry: dict):
+        ...
+
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
             return self.history[-limit:][::-1]
