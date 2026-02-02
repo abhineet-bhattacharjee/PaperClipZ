@@ -93,10 +93,11 @@ class PaperClipZ:
     def _parse_timestamp(self, timestamp: str | None):
         if not timestamp:
             return datetime.min
+
         try:
             dt = datetime.fromisoformat(timestamp_str)
             return dt
-        except (ValueError, TypeError):
+        except (ValueError, TypeError, AttributeError):
             return datetime.min
 
     def _load_history(self) -> list[dict]:
