@@ -66,13 +66,14 @@ class PaperClipZ:
 
         total_score = (recency_score * 10) + (frequency_score * 2 * recency_score)
 
-        return total_scoreF
+        return total_score
 
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
             sorted_history = sorted(
                 self.history,
-                key=lambda entry: entry.get('last_copied_at', entry.get('created_at'), ''),
+                key=lambda entry: self._parse_timestamp(
+                    e.get('last_copied_at') or e.get('created_at'), ''),
                 reverse=True
             )
             return sorted_history[:limit]
