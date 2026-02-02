@@ -60,10 +60,8 @@ class PaperClipZ:
             timestamp = created
 
         last_activity = self._parse_timestamp(timestamp)
-        if last_activity:
-            last_activity_time = datetime.fromisoformat(last_activity)
-            hours_ago = (now - last_activity_time).total_seconds() / 3600
-
+        if last_activity and last_activity != datetime.min:
+            hours_ago = (now - last_activity).total_seconds() / 3600
             recency_score = math.exp(-hours_ago / 24)
         else:
             recency_score = 0.0
