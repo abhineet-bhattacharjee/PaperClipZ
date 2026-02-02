@@ -52,8 +52,14 @@ class PaperClipZ:
         last_pasted = entry.get('last_pasted_at')
         last_copied = entry.get('last_copied_at', created)
 
-        last_activity = last_pasted if last_pasted else last_copied
+        if last_pasted:
+            timestamp = last_pasted
+        elif last_copied:
+            timestamp = last_copied
+        else:
+            timestamp = created
 
+        last_activity = self._parse_timestamp(timestamp)
         if last_activity:
             last_activity_time = datetime.fromisoformat(last_activity)
             hours_ago = (now - last_activity_time).total_seconds() / 3600
