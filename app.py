@@ -95,7 +95,8 @@ class PaperClipZ:
             return datetime.min
 
         try:
-            return datetime.fromisoformat(timestamp)
+            dt = datetime.fromisoformat(timestamp_str)
+            return dt
         except (ValueError, TypeError):
             return datetime.min
 
