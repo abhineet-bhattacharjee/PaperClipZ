@@ -66,7 +66,7 @@ class PaperClipZ:
 
         total_score = (recency_score * 10) + (frequency_score * 2 * recency_score)
 
-        return total_score
+        return total_scoreF
 
     def _sort_items(self, limit: int = 10):
         if self.sort_mode == 'last_copied':
@@ -106,7 +106,7 @@ class PaperClipZ:
 
         if existing_entry:
             self.history.remove(existing_entry)
-            existing_entry['last_copied'] = datetime.now().isoformat(timespec='seconds')
+            existing_entry['last_copied_at'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
 
             self.history.append(existing_entry)
