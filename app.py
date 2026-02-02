@@ -64,7 +64,7 @@ class PaperClipZ:
         paste_count = entry.get('paste_count', 0)
         frequency_score = math.log(paste_count + 1)
 
-        total_score = (recency_score * 10) + (frequency_score * 1)
+        total_score = (recency_score * 10) + (frequency_score * 2 * recency_score)
 
         return total_score
 
