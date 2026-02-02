@@ -88,6 +88,10 @@ class PaperClipZ:
         if not timestamp:
             return datetime.min
 
+        try:
+            return datetime.fromisoformat(timestamp)
+        except (ValueError, TypeError):
+            return datetime.min
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
