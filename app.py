@@ -75,6 +75,7 @@ class PaperClipZ:
                 key=lambda entry: entry.get('last_copied_at', entry.get('created_at'), ''),
                 reverse=True
             )
+            return sorted_history[:limit]
         else:
             sorted_history = sorted(
                 self.history,
