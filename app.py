@@ -48,8 +48,9 @@ class PaperClipZ:
     def _calculate_score(self, entry: dict):
         now = datetime.now()
 
+        created = entry.get('created_at')
         last_pasted = entry.get('last_pasted_at')
-        last_copied = entry.get('last_copied_at', entry.get('created_at'))
+        last_copied = entry.get('last_copied_at', created)
 
         last_activity = last_pasted if last_pasted else last_copied
 
