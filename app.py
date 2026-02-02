@@ -105,7 +105,7 @@ class PaperClipZ:
 
         if existing_entry:
             self.history.remove(existing_entry)
-            existing_entry['last_used'] = datetime.now().isoformat(timespec='seconds')
+            existing_entry['last_copied'] = datetime.now().isoformat(timespec='seconds')
             existing_entry['copy_count'] += 1
 
             self.history.append(existing_entry)
