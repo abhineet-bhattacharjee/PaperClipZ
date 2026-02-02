@@ -85,7 +85,9 @@ class PaperClipZ:
             return sorted_history[:limit]
 
     def _parse_timestamp(self, timestamp: str | None):
-        ...
+        if not timestamp:
+            return datetime.min
+
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
