@@ -91,8 +91,7 @@ class PaperClipZ:
         pinned = [e for e in self.history if e.get('id') in self.pinned_ids]
         unpinned = [e for e in self.history if not e.get('pinned')]
 
-
-
+        pinned.sort(key=lambda entry: entry.get('pin_order', 0))
         if self.sort_mode == 'last_copied':
             sorted_history = sorted(
                 unpinned,
