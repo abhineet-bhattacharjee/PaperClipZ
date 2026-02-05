@@ -1,232 +1,208 @@
 import pyperclip
 import keyboard
-
 import os
 import time
 import json
 import hashlib
 import math
-from datetime import datetime, timedelta
-from colorama import init, Fore, Style
+from datetime import datetime
+from colorama import init, Fore
 
 
 class PaperClipZ:
-    def __init__(self, history_file: str = 'history.json', config_file: str = 'config.json', interval: float = 1.0) -> None:
+    def __init__(
+        self,
+        history_file: str = "history.json",
+        config_file: str = "config.json",
+        interval: float = 1.0,
+    ) -> None:
         init(autoreset=True)
 
-        config: dict = self._load_config(config_file)
-        self.history_file: str = history_file
-        self.interval: float = config.get('interval', interval)
-        self.sort_mode: str = config.get('sort_mode', 'last_copied')
-        self.newline: bool = config.get('newline', True)
+        self.history_file = history_file
+        self.config = self._load_config(config_file)
+
+        self.interval = self.config.get("interval", interval)
+        self.sort_mode = self.config.get("sort_mode", "last_copied")
+        self.newline = self.config.get("newline", True)
+
+        # Load history FIRST
         self.history: list[dict] = self._load_history()
+
+        # Normalize pin order ONCE
         self._normalize_pins()
 
         try:
-            self.last_text: str = pyperclip.paste()
-        except:
-            self.last_text: str = ''
+            self.last_text = pyperclip.paste()
+        except Exception:
+            self.last_text = ""
 
-    def _load_config(self, config_file: str):
-        if not os.path.exists(config_file):
+    # ---------- CONFIG / STORAGE ----------
+
+    def _load_config(self, path: str) -> dict:
+        if not os.path.exists(path):
             return {}
-
         try:
-            with open(config_file, 'r', encoding='utf-8') as f:
+            with open(path, "r", encoding="utf-8") as f:
                 return json.load(f)
-        except:
+        except Exception:
             return {}
-
-    def _compute_hash(self, text: str):
-        return hashlib.sha256(text.encode('utf-8')).hexdigest()
-
-    def _find_entry_by_hash(self, text_hash: str):
-        for entry in self.history:
-            if entry.get('id') == text_hash:
-                return entry
-        return None
-
-    def _calculate_score(self, entry: dict):
-        now = datetime.now()
-
-        created = entry.get('created_at')
-        last_pasted = entry.get('last_pasted_at')
-        last_copied = entry.get('last_copied_at', created)
-
-        if last_pasted:
-            timestamp = last_pasted
-        elif last_copied:
-            timestamp = last_copied
-        else:
-            timestamp = created
-
-        last_activity = self._parse_timestamp(timestamp)
-        if last_activity and last_activity != datetime.min:
-            hours_ago = (now - last_activity).total_seconds() / 3600
-            recency_score = math.exp(-hours_ago / 24)
-        else:
-            recency_score = 0.0
-
-        paste_count = entry.get('paste_count', 0)
-        frequency_score = math.log(paste_count + 1)
-
-        total_score = (recency_score * 10) + (frequency_score * 2 * recency_score)
-
-        return total_score
-
-    def _normalize_pins(self) -> None:
-        ...
-
-    def _sort_items(self, limit: int = 10):
-        pinned = [e for e in self.history if e.get('pinned')]
-        unpinned = [e for e in self.history if not e.get('pinned')]
-
-        pinned.sort(key=lambda entry: entry.get('pin_order', 0))
-        if self.sort_mode == 'last_copied':
-            sorted_history = sorted(
-                unpinned,
-                key=lambda entry: self._parse_timestamp(
-                    entry.get('last_copied_at') or entry.get('created_at'), ''),
-                reverse=True
-            )
-        else:
-            sorted_history = sorted(
-                unpinned,
-                key=lambda entry: self._calculate_score(entry),
-                reverse=True
-            )
-
-        final = pinned + sorted_history
-        return final[:limit]
-
-    def _parse_timestamp(self, timestamp: str | None):
-        if not timestamp:
-            return datetime.min
-
-        try:
-            dt = datetime.fromisoformat(timestamp)
-            return dt
-        except (ValueError, TypeError, AttributeError):
-            return datetime.min
 
     def _load_history(self) -> list[dict]:
         if not os.path.exists(self.history_file):
             return []
-        with open(self.history_file, 'r', encoding='utf-8') as f:
-            try:
+        try:
+            with open(self.history_file, "r", encoding="utf-8") as f:
                 return json.load(f)
-            except json.JSONDecodeError:
-                return []
+        except Exception:
+            return []
 
     def _save_history(self) -> None:
+        with open(self.history_file, "w", encoding="utf-8") as f:
+            json.dump(self.history, f, indent=4, ensure_ascii=False)
+
+    # ---------- PIN LOGIC (SINGLE SOURCE OF TRUTH) ----------
+
+    def _normalize_pins(self) -> None:
+        pinned = [e for e in self.history if e.get("pinned")]
+        pinned.sort(key=lambda e: e.get("pin_order", float("inf")))
+
+        for idx, entry in enumerate(pinned):
+            entry["pin_order"] = idx
+
+    # ---------- UTILS ----------
+
+    def _compute_hash(self, text: str) -> str:
+        return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+    def _find_entry(self, text_hash: str):
+        for entry in self.history:
+            if entry["id"] == text_hash:
+                return entry
+        return None
+
+    def _parse_timestamp(self, ts: str | None):
+        if not ts:
+            return datetime.min
         try:
-            with open(self.history_file, 'w', encoding='utf-8') as f:
-                json.dump(self.history, f, ensure_ascii=False, indent=4)
-        except IOError as e:
-            print(f'{Fore.RED}Error saving history: {e}')
+            return datetime.fromisoformat(ts)
+        except Exception:
+            return datetime.min
+
+    def _calculate_score(self, entry: dict) -> float:
+        now = datetime.now()
+        last = (
+            entry.get("last_pasted_at")
+            or entry.get("last_copied_at")
+            or entry.get("created_at")
+        )
+
+        dt = self._parse_timestamp(last)
+        hours_ago = (now - dt).total_seconds() / 3600 if dt != datetime.min else 9999
+        recency = math.exp(-hours_ago / 24)
+
+        freq = math.log(entry.get("paste_count", 0) + 1)
+        return recency * 10 + freq * 2 * recency
+
+    # ---------- SORTING ----------
+
+    def _sort_items(self, limit: int = 10) -> list[dict]:
+        pinned = [e for e in self.history if e.get("pinned")]
+        unpinned = [e for e in self.history if not e.get("pinned")]
+
+        pinned.sort(key=lambda e: e["pin_order"])
+
+        if self.sort_mode == "last_copied":
+            unpinned.sort(
+                key=lambda e: self._parse_timestamp(
+                    e.get("last_copied_at") or e.get("created_at")
+                ),
+                reverse=True,
+            )
+        else:
+            unpinned.sort(key=self._calculate_score, reverse=True)
+
+        return (pinned + unpinned)[:limit]
+
+    # ---------- CORE FEATURES ----------
 
     def _add_entry(self, text: str) -> None:
         text_hash = self._compute_hash(text)
-        existing_entry = self._find_entry_by_hash(text_hash)
+        existing = self._find_entry(text_hash)
 
-        if existing_entry:
-            self.history.remove(existing_entry)
-            existing_entry['last_copied_at'] = datetime.now().isoformat(timespec='seconds')
-            existing_entry['copy_count'] = existing_entry.get('copy_count', 0) + 1
-
-            self.history.append(existing_entry)
-            print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
+        if existing:
+            existing["last_copied_at"] = datetime.now().isoformat(timespec="seconds")
+            existing["copy_count"] = existing.get("copy_count", 0) + 1
         else:
-            is_pinned = text_hash in self.pinned_ids
-            pin_order = None
-
-            if is_pinned:
-                max_order = max(
-                    (entry.get('pin_order', -1) for entry in self.history if entry.get('pinned')),
-                    default=-1
-                )
-                pin_order = max_order + 1
-
             entry = {
-                'id': text_hash,
-                'text': text,
-                'created_at': datetime.now().isoformat(timespec='seconds'),
-                'last_copied_at': datetime.now().isoformat(timespec='seconds'),
-                'last_pasted_at': None,
-                'copy_count': 1,
-                'paste_count': 0,
-                'pinned': is_pinned,
-                'pin_order': pin_order
+                "id": text_hash,
+                "text": text,
+                "created_at": datetime.now().isoformat(timespec="seconds"),
+                "last_copied_at": datetime.now().isoformat(timespec="seconds"),
+                "last_pasted_at": None,
+                "copy_count": 1,
+                "paste_count": 0,
+                "pinned": False,
+                "pin_order": None,
             }
-
             self.history.append(entry)
-            print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
 
         self._save_history()
 
     def _paste_entry(self, index: int):
-        if not self.history:
-            print(f"{Fore.RED}No history to paste from.")
+        items = self._sort_items(10)
+        if index >= len(items):
             return
 
-        recent_history = self._sort_items(limit=10)
+        entry = items[index]
+        text = entry["text"]
 
-        if index >= len(recent_history):
-            print(f"{Fore.YELLOW}Invalid index for pasting. Only {len(recent_history)} items available.")
-            return
+        if self.newline and not text.endswith(("\n", "\r\n")):
+            text += "\r\n"
 
-        text_to_paste = recent_history[index]['text']
-        text_to_paste += '\r\n' if not text_to_paste.endswith(('\n', '\r\n')) and self.newline else ''
+        pyperclip.copy(text)
+        keyboard.send("ctrl+v")
 
-        self.last_text = text_to_paste
-        pyperclip.copy(text_to_paste)
-
-        entry_id = recent_history[index]['id']
-        for entry in self.history:
-            if entry['id'] == entry_id:
-                entry['last_pasted_at'] = datetime.now().isoformat(timespec='seconds')
-                entry['paste_count'] = entry.get('paste_count', 0) + 1
-                break
+        entry["last_pasted_at"] = datetime.now().isoformat(timespec="seconds")
+        entry["paste_count"] = entry.get("paste_count", 0) + 1
 
         self._save_history()
 
-        keyboard.send('ctrl+v')
+        print(f"{Fore.BLUE}PASTED [{index + 1}]")
 
-        print(f'{Fore.BLUE}PASTED [{index}]: {text_to_paste.strip()[:100]}{"..." if len(text_to_paste) > 100 else ""}')
+    # ---------- HOTKEYS ----------
 
     def _hotkeys(self):
-        for i in range(1, 10):
-            keyboard.add_hotkey(f'ctrl+{i}', lambda idx=i - 1: self._paste_entry(idx), suppress=True)
+        for i in range(10):
+            keyboard.add_hotkey(
+                f"ctrl+{(i + 1) % 10}",
+                lambda idx=i: self._paste_entry(idx),
+                suppress=True,
+            )
 
-        keyboard.add_hotkey('ctrl+0', lambda idx=9: self._paste_entry(idx), suppress=True)
+        print(f"{Fore.CYAN}Ctrl+1 → Ctrl+0 bound")
 
-        print(f'{Fore.CYAN}Hotkeys registered:')
-        print(f'{Fore.CYAN}  Ctrl+1 = Most recent')
-        print(f'{Fore.CYAN}  Ctrl+2 = 2nd most recent')
-        print(f'{Fore.CYAN}  ...')
-        print(f'{Fore.CYAN}  Ctrl+0 = 10th most recent\n')
+    # ---------- LOOP ----------
 
-    def run(self) -> None:
-        print(f'{Fore.CYAN}Clipboard logger started... (Ctrl+C to trigger)')
+    def run(self):
+        print(f"{Fore.CYAN}Clipboard logger started")
         self._hotkeys()
 
         try:
             while True:
                 try:
-                    text: str = pyperclip.paste()
-                except:
-                    print(f'{Fore.RED}Clipboard access failed, retrying...')
+                    text = pyperclip.paste()
+                except Exception:
                     time.sleep(self.interval)
                     continue
 
                 if text and text != self.last_text:
                     self._add_entry(text)
                     self.last_text = text
+
                 time.sleep(self.interval)
         except KeyboardInterrupt:
-            print(f'{Fore.CYAN}\nClipboard logger stopped.')
+            print(f"{Fore.CYAN}\nStopped")
 
 
-if __name__ == '__main__':
-    app = PaperClipZ()
-    app.run()
+if __name__ == "__main__":
+    PaperClipZ().run()
