@@ -17,6 +17,16 @@ class PaperClipZ:
         config: dict = self._load_config(config_file)
         self.pinned_ids: set[str] = set(config.get('pinned_ids',  []))
         self.history_file: str = history_file
+
+        pinned = [entry for entry in self.history if entry.get('id') in self.pinned_ids]
+        pinned.sort(
+            key=lambda entry: entry.get('pin_order', float('inf'))
+        )
+
+        for index, entry in enumerate(pinned):
+            entry['pin_order'] = index
+            entry['pinned'] = True
+
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
         self.newline: bool = config.get('newline', True)
@@ -81,13 +91,7 @@ class PaperClipZ:
         pinned = [e for e in self.history if e.get('id') in self.pinned_ids]
         unpinned = [e for e in self.history if not e.get('pinned')]
 
-        pinned.sort(
-            key=lambda entry: entry.get('pin_order', float('inf'))
-        )
 
-        for index, entry in enumerate(pinned):
-            entry['pin_order'] = index
-            entry['pinned'] = True
 
         if self.sort_mode == 'last_copied':
             sorted_history = sorted(
@@ -164,6 +168,7 @@ class PaperClipZ:
                 'pinned': is_pinned,
                 'pin_order': pin_order
             }
+
             self.history.append(entry)
             print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
 
