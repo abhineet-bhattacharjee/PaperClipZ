@@ -147,6 +147,7 @@ class PaperClipZ:
             print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
         else:
             is_pinned = text_hash in self.pinned_ids
+            pin_order = None
 
             if is_pinned:
                 max_order = max(
