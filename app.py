@@ -79,7 +79,7 @@ class PaperClipZ:
 
         if self.sort_mode == 'last_copied':
             sorted_history = sorted(
-                self.history,
+                unpinned,
                 key=lambda entry: self._parse_timestamp(
                     entry.get('last_copied_at') or entry.get('created_at'), ''),
                 reverse=True
