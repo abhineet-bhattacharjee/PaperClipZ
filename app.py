@@ -14,8 +14,8 @@ class PaperClipZ:
     def __init__(self, history_file: str = 'history.json', config_file: str = 'config.json', interval: float = 1.0) -> None:
         init(autoreset=True)
 
-        self.config = self._load_config(config_file)
-
+        self.config: dict = self._load_config(config_file)
+        self.pinned_ids: set[str] = set(self.config.get('pinned_ids',  []))
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
