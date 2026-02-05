@@ -17,6 +17,10 @@ class PaperClipZ:
         config: dict = self._load_config(config_file)
         self.pinned_ids: set[str] = set(config.get('pinned_ids',  []))
         self.history_file: str = history_file
+        self.interval: float = config.get('interval', interval)
+        self.sort_mode: str = config.get('sort_mode', 'last_copied')
+        self.newline: bool = config.get('newline', True)
+        self.history: list[dict] = self._load_history()
 
         pinned = [entry for entry in self.history if entry.get('id') in self.pinned_ids]
         pinned.sort(
@@ -26,11 +30,6 @@ class PaperClipZ:
         for index, entry in enumerate(pinned):
             entry['pin_order'] = index
             entry['pinned'] = True
-
-        self.interval: float = config.get('interval', interval)
-        self.sort_mode: str = config.get('sort_mode', 'last_copied')
-        self.newline: bool = config.get('newline', True)
-        self.history: list[dict] = self._load_history()
 
         for entry in self.history:
             entry['pinned'] = entry.get('id') in self.pinned_ids
