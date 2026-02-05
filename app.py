@@ -144,6 +144,15 @@ class PaperClipZ:
             self.history.append(existing_entry)
             print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
         else:
+            is_pinned = text_hash in self.pinned_ids
+
+            if is_pinned:
+                max_order = max(
+                    (entry.get('pin_order', -1) for entry in self.history if entry.get('pinned')),
+                    default=-1
+                )
+                pin_order = max_order + 1
+
             entry = {
                 'id': text_hash,
                 'text': text,
@@ -152,8 +161,8 @@ class PaperClipZ:
                 'last_pasted_at': None,
                 'copy_count': 1,
                 'paste_count': 0,
-                'pinned': text_hash in self.pinned_ids,
-                'pin_order': 0
+                'pinned': is_pinned,
+                'pin_order': pin_order
             }
             self.history.append(entry)
             print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
