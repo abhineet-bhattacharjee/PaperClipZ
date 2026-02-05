@@ -135,7 +135,8 @@ class PaperClipZ:
                 'last_copied_at': datetime.now().isoformat(timespec='seconds'),
                 'last_pasted_at': None,
                 'copy_count': 1,
-                'paste_count': 0
+                'paste_count': 0,
+                'pinned': False
             }
             self.history.append(entry)
             print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
