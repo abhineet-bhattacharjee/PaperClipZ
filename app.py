@@ -20,18 +20,7 @@ class PaperClipZ:
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
         self.newline: bool = config.get('newline', True)
         self.history: list[dict] = self._load_history()
-
-        pinned = [entry for entry in self.history if entry.get('id') in self.pinned_ids]
-        pinned.sort(
-            key=lambda entry: entry.get('pin_order', float('inf'))
-        )
-
-        for index, entry in enumerate(pinned):
-            entry['pin_order'] = index
-            entry['pinned'] = True
-
-        for entry in self.history:
-            entry['pinned'] = entry.get('id') in self.pinned_ids
+        self._normalize_pins()
 
         try:
             self.last_text: str = pyperclip.paste()
@@ -84,6 +73,9 @@ class PaperClipZ:
         total_score = (recency_score * 10) + (frequency_score * 2 * recency_score)
 
         return total_score
+
+    def _normalize_pins(self) -> None:
+        ...
 
     def _sort_items(self, limit: int = 10):
         pinned = [e for e in self.history if e.get('pinned')]
