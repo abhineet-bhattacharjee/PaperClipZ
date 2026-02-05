@@ -123,7 +123,7 @@ class PaperClipZ:
         if existing_entry:
             self.history.remove(existing_entry)
             existing_entry['last_copied_at'] = datetime.now().isoformat(timespec='seconds')
-            existing_entry['copy_count'] += 1
+            existing_entry['copy_count'] += existing_entry.get('copy_count', 0) + 1
 
             self.history.append(existing_entry)
             print(f'{Fore.GREEN}UPDATE LOG: (copied {existing_entry["copy_count"]} times(s)): {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
