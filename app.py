@@ -84,14 +84,12 @@ class PaperClipZ:
                     entry.get('last_copied_at') or entry.get('created_at'), ''),
                 reverse=True
             )
-            return sorted_history[:limit]
         else:
             sorted_history = sorted(
                 unpinned,
                 key=lambda entry: self._calculate_score(entry),
                 reverse=True
             )
-            return sorted_history[:limit]
 
     def _parse_timestamp(self, timestamp: str | None):
         if not timestamp:
