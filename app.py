@@ -15,7 +15,6 @@ class PaperClipZ:
         init(autoreset=True)
 
         config: dict = self._load_config(config_file)
-        self.pinned_ids: set[str] = set(config.get('pinned_ids',  []))
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
@@ -87,7 +86,7 @@ class PaperClipZ:
         return total_score
 
     def _sort_items(self, limit: int = 10):
-        pinned = [e for e in self.history if e.get('id') in self.pinned_ids]
+        pinned = [e for e in self.history if e.get('pinned')]
         unpinned = [e for e in self.history if not e.get('pinned')]
 
         pinned.sort(key=lambda entry: entry.get('pin_order', 0))
