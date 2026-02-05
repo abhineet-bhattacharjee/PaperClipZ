@@ -13,13 +13,17 @@ from colorama import init, Fore, Style
 class PaperClipZ:
     def __init__(self, history_file: str = 'history.json', config_file: str = 'config.json', interval: float = 1.0) -> None:
         init(autoreset=True)
-        config = self._load_config(config_file)
+
+        self.config = self._load_config(config_file)
 
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
         self.newline: bool = config.get('newline', True)
         self.history: list[dict] = self._load_history()
+
+        for entry in self.history:
+            entry['pinned'] = entry.get('id') in self.pinned_ids
 
         try:
             self.last_text: str = pyperclip.paste()
