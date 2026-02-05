@@ -15,7 +15,7 @@ class PaperClipZ:
         init(autoreset=True)
 
         config: dict = self._load_config(config_file)
-        self.pinned_ids: set[str] = set(self.config.get('pinned_ids',  []))
+        self.pinned_ids: set[str] = set(config.get('pinned_ids',  []))
         self.history_file: str = history_file
         self.interval: float = config.get('interval', interval)
         self.sort_mode: str = config.get('sort_mode', 'last_copied')
@@ -144,7 +144,8 @@ class PaperClipZ:
                 'last_pasted_at': None,
                 'copy_count': 1,
                 'paste_count': 0,
-                'pinned': text_hash in self.pinned_ids
+                'pinned': text_hash in self.pinned_ids,
+                'pin_order': 0
             }
             self.history.append(entry)
             print(f'{Fore.LIGHTGREEN_EX}SAVE LOG {len(self.history)}: {text.strip()[:100]}{"..." if len(text) > 100 else ""}')
