@@ -74,6 +74,9 @@ class PaperClipZ:
         return total_score
 
     def _sort_items(self, limit: int = 10):
+        pinned = [e for e in self.history if e.get('pinned')]
+        unpinned = [e for e in self.history if not e.get('pinned')]
+
         if self.sort_mode == 'last_copied':
             sorted_history = sorted(
                 self.history,
