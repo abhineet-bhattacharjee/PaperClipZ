@@ -91,6 +91,9 @@ class PaperClipZ:
                 reverse=True
             )
 
+        final = pinned + sorted_history
+        return final[:limit]
+
     def _parse_timestamp(self, timestamp: str | None):
         if not timestamp:
             return datetime.min
