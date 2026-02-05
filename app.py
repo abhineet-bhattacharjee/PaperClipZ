@@ -87,7 +87,7 @@ class PaperClipZ:
             return sorted_history[:limit]
         else:
             sorted_history = sorted(
-                self.history,
+                unpinned,
                 key=lambda entry: self._calculate_score(entry),
                 reverse=True
             )
