@@ -137,8 +137,8 @@ class PaperClipZ:
 
         return (pinned + unpinned)[:limit]
 
-    def _add_entry(self, text: str) -> None:
-        text_hash = self._compute_hash(text)
+    def _add_entry(self, text: str, current_hash: str) -> None:
+        text_hash = current_hash
         existing = self._find_entry(text_hash)
 
         if existing:
@@ -279,7 +279,7 @@ class PaperClipZ:
 
                 current_hash = self._compute_hash(text)
                 if current_hash != self.last_hash:
-                    self._add_entry(text)
+                    self._add_entry(text, current_hash)
                     self.last_hash = current_hash
 
                 time.sleep(self.interval)
