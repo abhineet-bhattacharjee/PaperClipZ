@@ -11,3 +11,9 @@ class MainWindow(ctk.CTk):
 
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("blue")
+
+        self._setup_ui()
+
+        self.withdraw()
+
+        self.protocol("WM_DELETE_WINDOW", self.hide_window)
