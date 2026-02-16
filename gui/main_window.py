@@ -31,3 +31,6 @@ class MainWindow(ctk.CTk):
             text_color="gray"
         )
         placeholder_label.pack(pady=50)
+
+    def show_window(self):
+        ...
