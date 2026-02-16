@@ -17,4 +17,9 @@ class MainWindow(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
 
     def _setup_ui(self):
-        ...
+        header_label = ctk.CTkLabel(
+            self,
+            text="📋 PaperClipZ",
+            font=ctk.CTkFont(size=24, weight="bold")
+        )
+        header_label.pack(pady=20)
