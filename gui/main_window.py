@@ -39,3 +39,19 @@ class MainWindow(ctk.CTk):
 
     def hide_window(self):
         self.withdraw()
+
+
+if __name__ == "__main__":
+    print("Testing hidden window...")
+    print("Window should be HIDDEN on start")
+    print("Wait 3 seconds, then it will SHOW")
+
+    paperclipz = PaperClipZ()
+    window = MainWindow(paperclipz)
+
+    print("Window created (hidden)")
+
+    window.after(3000, window.show_window)
+
+    print("Starting mainloop...")
+    window.mainloop()

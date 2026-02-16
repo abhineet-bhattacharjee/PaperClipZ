@@ -16,8 +16,9 @@ def create_tray_icon():
 
 
 class TrayIcon:
-    def __init__(self):
+    def __init__(self, window):
         self.icon = None
+        self.window = window
 
     def create_menu(self):
         return pystray.Menu(
@@ -26,8 +27,9 @@ class TrayIcon:
         )
 
     def on_open(self):
-        # Implement logic to show the main application window
-        print("Open PaperClipZ - not implemented yet")
+        print("Opening PaperClipZ")
+        if self.window:
+            self.window.after(0, self.window.show_window)
 
     def on_exit(self):
         print("Exit clicked")
