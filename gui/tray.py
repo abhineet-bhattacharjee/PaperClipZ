@@ -29,3 +29,7 @@ class TrayIcon:
         # Implement logic to show the main application window
         print("Open PaperClipZ - not implemented yet")
 
+    def on_exit(self):
+        print("Exit clicked")
+        if self.icon:
+            self.icon.stop()
