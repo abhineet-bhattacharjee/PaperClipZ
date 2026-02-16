@@ -33,3 +33,6 @@ class TrayIcon:
         print("Exit clicked")
         if self.icon:
             self.icon.stop()
+
+    def run(self):
+        ...
