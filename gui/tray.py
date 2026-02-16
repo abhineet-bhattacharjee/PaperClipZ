@@ -42,3 +42,7 @@ class TrayIcon:
             menu=self.create_menu()
         )
         self.icon.run()
+
+    def stop(self):
+        if self.icon:
+            self.icon.stop()
