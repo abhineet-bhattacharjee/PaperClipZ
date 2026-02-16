@@ -33,4 +33,9 @@ class MainWindow(ctk.CTk):
         placeholder_label.pack(pady=50)
 
     def show_window(self):
-        ...
+        self.deiconify()
+        self.lift()
+        self.focus_force()
+
+    def hide_window(self):
+        self.withdraw()
