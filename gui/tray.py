@@ -18,3 +18,6 @@ def create_tray_icon():
 class TrayIcon:
     def __init__(self):
         self.icon = None
+
+    def create_menu(self):
+        ...
