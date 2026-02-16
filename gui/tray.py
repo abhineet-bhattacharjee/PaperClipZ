@@ -20,4 +20,7 @@ class TrayIcon:
         self.icon = None
 
     def create_menu(self):
-        ...
+        return pystray.Menu(
+            pystray.MenuItem("Open PaperClipZ", self.on_open),
+            pystray.MenuItem("Exit", self.on_exit)
+        )
