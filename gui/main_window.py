@@ -23,3 +23,11 @@ class MainWindow(ctk.CTk):
             font=ctk.CTkFont(size=24, weight="bold")
         )
         header_label.pack(pady=20)
+
+        placeholder_label = ctk.CTkLabel(
+            self,
+            text="Window is working!\nThis will show clipboard items later.",
+            font=ctk.CTkFont(size=14),
+            text_color="gray"
+        )
+        placeholder_label.pack(pady=50)
