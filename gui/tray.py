@@ -13,3 +13,8 @@ def create_tray_icon():
     dc.rectangle([20, 8, 44, 20], fill='white', outline='black', width=2)
 
     return image
+
+
+class TrayIcon:
+    def __init__(self):
+        self.icon = None
