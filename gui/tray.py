@@ -35,4 +35,10 @@ class TrayIcon:
             self.icon.stop()
 
     def run(self):
-        ...
+        self.icon = pystray.Icon(
+            "PaperClipZ",
+            create_tray_icon(),
+            "PaperClipZ - Clipboard Manager",
+            menu=self.create_menu()
+        )
+        self.icon.run()
