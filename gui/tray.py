@@ -24,3 +24,8 @@ class TrayIcon:
             pystray.MenuItem("Open PaperClipZ", self.on_open),
             pystray.MenuItem("Exit", self.on_exit)
         )
+
+    def on_open(self):
+        # Implement logic to show the main application window
+        print("Open PaperClipZ - not implemented yet")
+
