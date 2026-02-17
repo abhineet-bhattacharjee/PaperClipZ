@@ -34,6 +34,12 @@ class MainWindow(ctk.CTk):
         self.footer = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.footer.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 20))
 
+        ctk.CTkLabel(
+            self.header,
+            text="PaperClipZ - Clipboard Manager",
+            font=ctk.CTkFont(size=24, weight="bold")
+        ).pack(side="left")
+
     def show_window(self):
         self.deiconify()
         self.lift()
