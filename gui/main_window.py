@@ -15,6 +15,9 @@ class MainWindow(ctk.CTk):
         self.withdraw()
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
 
+    def _setup_layout(self):
+        ...
+
     def _setup_ui(self):
         header_label = ctk.CTkLabel(
             self,
