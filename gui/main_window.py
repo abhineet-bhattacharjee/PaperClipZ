@@ -40,6 +40,13 @@ class MainWindow(ctk.CTk):
             font=ctk.CTkFont(size=24, weight="bold")
         ).pack(side="left")
 
+        ctk.CTkLabel(
+            self.content,
+            text="Clipboard items will appear here",
+            font=ctk.CTkFont(size=14),
+            text_color="gray"
+        ).pack(expand=True)
+
     def show_window(self):
         self.deiconify()
         self.lift()
