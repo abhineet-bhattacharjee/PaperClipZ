@@ -1,4 +1,6 @@
 import threading
+import customtkinter as ctk
+
 from app import PaperClipZ
 from gui.main_window import MainWindow
 from gui.tray import TrayIcon
