@@ -31,8 +31,8 @@ class TrayIcon:
             self.window.after(0, self.window.show_window)
 
     def on_exit(self):
-        if self.icon:
-            self.icon.stop()
+        if self.window:
+            self.window.after(0, self.window.destroy)
 
     def run(self):
         self.icon = pystray.Icon(
