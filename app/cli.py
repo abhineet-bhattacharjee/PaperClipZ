@@ -17,6 +17,7 @@ class CLI:
         self.interval = interval
         self.last_hash = ""
         self.is_pasting = False
+        self.running = False
 
         try:
             initial_text = pyperclip.paste()
@@ -75,12 +76,16 @@ class CLI:
         print(f"{Fore.CYAN}Hotkeys: Ctrl+1-0 (paste), Ctrl+P (pin/unpin)")
         print(f"{Fore.CYAN}Sort mode: {self.clipboard_manager.sort_mode}")
 
+    def stop(self):
+        self.running = False
+
     def run(self):
         print(f"{Fore.CYAN}PaperClipZ started (Ctrl+C to stop)")
         self._setup_hotkeys()
+        self.running = True
 
         try:
-            while True:
+            while self.running:
                 try:
                     text = pyperclip.paste()
                 except Exception:
