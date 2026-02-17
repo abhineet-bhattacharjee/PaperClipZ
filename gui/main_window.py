@@ -47,6 +47,13 @@ class MainWindow(ctk.CTk):
             text_color="gray"
         ).pack(expand=True)
 
+        ctk.CTkLabel(
+            self.footer,
+            text=f"Sort mode: {self.paperclipz.clipboard_manager.sort_mode}",
+            font=ctk.CTkFont(size=12),
+            text_color="gray"
+        ).pack(side="left")
+
     def show_window(self):
         self.deiconify()
         self.lift()
