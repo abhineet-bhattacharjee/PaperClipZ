@@ -26,11 +26,11 @@ class TrayIcon:
             pystray.MenuItem("Exit", self.on_exit)
         )
 
-    def on_open(self):
+    def on_open(self, icon, item):
         if self.window:
             self.window.after(0, self.window.show_window)
 
-    def on_exit(self):
+    def on_exit(self, icon, item):
         if self.window:
             self.window.after(0, self.window.quit)
             self.window.after(0, self.window.destroy)
