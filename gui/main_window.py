@@ -28,6 +28,9 @@ class MainWindow(ctk.CTk):
         self.header = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.header.grid(row=0, column=0, sticky="ew", padx=20, pady=(20, 0))
 
+        self.content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.content.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
+
 
     def show_window(self):
         self.deiconify()
