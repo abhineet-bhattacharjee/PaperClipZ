@@ -10,8 +10,11 @@ class MainWindow(ctk.CTk):
 
         self.title("PaperClipZ")
         self.geometry("800x600")
+        self.minsize(600, 400)
 
+        self._setup_layout()
         self._setup_ui()
+
         self.withdraw()
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
 
