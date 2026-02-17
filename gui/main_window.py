@@ -19,23 +19,15 @@ class MainWindow(ctk.CTk):
         self.protocol("WM_DELETE_WINDOW", self.hide_window)
 
     def _setup_layout(self):
-        ...
+        self.grid_columnconfigure(0, weight=1)
+        self.grid_rowconfigure(0, weight=0)  # Header - fixed
+        self.grid_rowconfigure(1, weight=1)  # Content - expands
+        self.grid_rowconfigure(2, weight=0)  # Footer - fixed
 
     def _setup_ui(self):
-        header_label = ctk.CTkLabel(
-            self,
-            text="📋 PaperClipZ",
-            font=ctk.CTkFont(size=24, weight="bold")
-        )
-        header_label.pack(pady=20)
+        self.header = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.header.grid(row=0, column=0, sticky="ew", padx=20, pady=(20, 0))
 
-        placeholder_label = ctk.CTkLabel(
-            self,
-            text="Window is working!\nThis will show clipboard items later.",
-            font=ctk.CTkFont(size=14),
-            text_color="gray"
-        )
-        placeholder_label.pack(pady=50)
 
     def show_window(self):
         self.deiconify()
