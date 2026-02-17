@@ -27,12 +27,10 @@ class TrayIcon:
         )
 
     def on_open(self):
-        print("Opening PaperClipZ")
         if self.window:
             self.window.after(0, self.window.show_window)
 
     def on_exit(self):
-        print("Exit clicked")
         if self.icon:
             self.icon.stop()
 
