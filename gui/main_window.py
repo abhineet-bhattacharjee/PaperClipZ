@@ -49,6 +49,12 @@ class MainWindow(ctk.CTk):
         self.content_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
         self.content_frame.pack(fill="both", expand=True, padx=20, pady=(0, 20))
 
+        self.scrollable_frame = ctk.CTkScrollableFrame(
+            self.content_frame,
+            corner_radius=12
+        )
+        self.scrollable_frame.pack(fill="both", expand=True)
+
         self.footer = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.footer.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 20))
 
