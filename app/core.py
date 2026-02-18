@@ -37,4 +37,6 @@ class PaperClipZ:
         self.cli.run()
 
     def stop(self):
-        ...
+        self.running = False
+        self.cli.stop()
+        print("PaperClipZ shutting down...")
