@@ -31,6 +31,13 @@ class MainWindow(ctk.CTk):
         self.header_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
         self.header_frame.pack(fill="x", padx=20, pady=(20, 10))
 
+        title_label = ctk.CTkLabel(
+            self.header_frame,
+            text="📋 PaperClipZ",
+            font=ctk.CTkFont(size=24, weight="bold")
+        )
+        title_label.pack(side="left")
+
         self.content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.content.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
 
