@@ -25,5 +25,8 @@ class PaperClipZ:
     def get_sort_mode(self) -> str:
         return self.clipboard_manager.sort_mode
 
+    def get_total_items(self) -> int:
+        return len(self.storage.history)
+
     def run(self):
         self.cli.run()
