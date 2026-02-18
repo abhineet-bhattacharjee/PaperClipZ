@@ -60,6 +60,15 @@ class MainWindow(ctk.CTk):
         self.footer_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
         self.footer_frame.pack(fill="x", padx=20, pady=(0, 20))
 
+
+        footer_label = ctk.CTkLabel(
+            self.footer_frame,
+            text=f"Sort mode: {self.paperclipz.clipboard_manager.sort_mode}",
+            font=ctk.CTkFont(size=12),
+            text_color="gray"
+        )
+        footer_label.pack(side="left")
+
     def show_window(self):
         self.deiconify()
         self.lift()
