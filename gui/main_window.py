@@ -55,6 +55,14 @@ class MainWindow(ctk.CTk):
         )
         self.scrollable_frame.pack(fill="both", expand=True)
 
+        for i in range(5):
+            card = ClipboardCard(
+                self.scrollable_frame,
+                text=f"Fake clipboard item #{i + 1}\nThis is a preview of clipboard content"
+            )
+            card.pack(fill="x", pady=5)
+            self.cards.append(card)
+
         self.footer = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.footer.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 20))
 
