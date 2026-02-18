@@ -25,6 +25,9 @@ class MainWindow(ctk.CTk):
         self.grid_rowconfigure(2, weight=0)  # Footer - fixed
 
     def _setup_ui(self):
+        self.main_container = ctk.CTkFrame(self, fg_color="transparent")
+        self.main_container.pack(fill="both", expand=True)
+
         self.header = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.header.grid(row=0, column=0, sticky="ew", padx=20, pady=(20, 0))
 
