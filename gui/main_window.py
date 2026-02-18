@@ -49,17 +49,16 @@ class MainWindow(ctk.CTk):
         )
         self.scrollable_frame.pack(fill="both", expand=True)
 
-       for i in range(5):
+        for i in range(5):
             card = ClipboardCard(
-                self.scrollable_frame,
-                text=f"Fake clipboard item #{i+1}\nThis is a preview of clipboard content"
+               self.scrollable_frame,
+               text=f"Fake clipboard item #{i + 1}\nThis is a preview of clipboard content"
             )
             card.pack(fill="x", pady=5)
             self.cards.append(card)
 
         self.footer_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
         self.footer_frame.pack(fill="x", padx=20, pady=(0, 20))
-
 
         footer_label = ctk.CTkLabel(
             self.footer_frame,
