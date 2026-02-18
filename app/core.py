@@ -35,3 +35,6 @@ class PaperClipZ:
     def run(self):
         self.running = True
         self.cli.run()
+
+    def stop(self):
+        ...
