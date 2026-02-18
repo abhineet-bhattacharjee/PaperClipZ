@@ -22,5 +22,8 @@ class PaperClipZ:
         self.pin_manager = PinManager(self.storage)
         self.cli = CLI(self.clipboard_manager, self.pin_manager, newline, interval)
 
+    def get_sort_mode(self) -> str:
+        return self.clipboard_manager.sort_mode
+
     def run(self):
         self.cli.run()
