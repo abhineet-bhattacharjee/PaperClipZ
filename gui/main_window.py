@@ -75,6 +75,13 @@ class MainWindow(ctk.CTk):
             text_color="gray"
         ).pack(side="left", padx=20)
 
+        ctk.CTkLabel(
+            self.footer_frame,
+            text="Ctrl+1-0 to paste",
+            font=ctk.CTkFont(size=12),
+            text_color="gray"
+        ).pack(side="right")
+
     def show_window(self):
         self.deiconify()
         self.lift()
