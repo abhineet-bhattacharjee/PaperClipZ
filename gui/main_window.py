@@ -46,8 +46,8 @@ class MainWindow(ctk.CTk):
         )
         self.search_entry.pack(side="right")
 
-        self.content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.content.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
+        self.content_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
+        self.content_frame.pack(fill="both", expand=True, padx=20, pady=(0, 20))
 
         self.footer = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.footer.grid(row=2, column=0, sticky="ew", padx=20, pady=(0, 20))
