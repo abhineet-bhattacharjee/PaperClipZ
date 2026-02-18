@@ -68,6 +68,13 @@ class MainWindow(ctk.CTk):
         )
         footer_label.pack(side="left")
 
+        ctk.CTkLabel(
+            self.footer_frame,
+            text=f"Total items: {len(self.paperclipz.storage.history)}",
+            font=ctk.CTkFont(size=12),
+            text_color="gray"
+        ).pack(side="left", padx=20)
+
     def show_window(self):
         self.deiconify()
         self.lift()
