@@ -28,8 +28,8 @@ class MainWindow(ctk.CTk):
         self.main_container = ctk.CTkFrame(self, fg_color="transparent")
         self.main_container.pack(fill="both", expand=True)
 
-        self.header = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
-        self.header.grid(row=0, column=0, sticky="ew", padx=20, pady=(20, 0))
+        self.header_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
+        self.header_frame.pack(fill="x", padx=20, pady=(20, 10))
 
         self.content = ctk.CTkFrame(self, corner_radius=0, fg_color="transparent")
         self.content.grid(row=1, column=0, sticky="nsew", padx=20, pady=10)
