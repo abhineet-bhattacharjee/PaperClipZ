@@ -28,5 +28,8 @@ class PaperClipZ:
     def get_total_items(self) -> int:
         return len(self.storage.history)
 
+    def get_pinned_count(self) -> int:
+        return len([e for e in self.storage.history if e.get("pinned")])
+
     def run(self):
         self.cli.run()
