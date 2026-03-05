@@ -60,12 +60,13 @@ class MainWindow(ctk.CTk):
         )
         self.sort_mode_label.pack(side="left")
 
-        ctk.CTkLabel(
+        self.total_items_label = ctk.CTkLabel(
             self.footer_frame,
-            text=f"Total items: {len(self.paperclipz.storage.history)}",
+            text=f"Total items: {self.paperclipz.get_total_items()} items",
             font=ctk.CTkFont(size=12),
             text_color="gray"
-        ).pack(side="left", padx=20)
+        )
+        self.total_items_label.pack(side="left", padx=20)
 
         ctk.CTkLabel(
             self.footer_frame,
