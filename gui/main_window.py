@@ -49,24 +49,16 @@ class MainWindow(ctk.CTk):
         )
         self.scrollable_frame.pack(fill="both", expand=True)
 
-        for i in range(5):
-            card = ClipboardCard(
-               self.scrollable_frame,
-               text=f"Fake clipboard item #{i + 1}\nThis is a preview of clipboard content"
-            )
-            card.pack(fill="x", pady=5)
-            self.cards.append(card)
-
         self.footer_frame = ctk.CTkFrame(self.main_container, fg_color="transparent")
         self.footer_frame.pack(fill="x", padx=20, pady=(0, 20))
 
-        footer_label = ctk.CTkLabel(
+        self.sort_mode_label = ctk.CTkLabel(
             self.footer_frame,
-            text=f"Sort mode: {self.paperclipz.clipboard_manager.sort_mode}",
+            text=f"Sort mode: {self.paperclipz.get_sort_mode().title()}",
             font=ctk.CTkFont(size=12),
             text_color="gray"
         )
-        footer_label.pack(side="left")
+        self.sort_mode_label.pack(side="left")
 
         ctk.CTkLabel(
             self.footer_frame,
