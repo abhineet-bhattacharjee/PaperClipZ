@@ -68,6 +68,18 @@ class MainWindow(ctk.CTk):
         )
         self.total_items_label.pack(side="left", padx=20)
 
+        pinned_count = self.paperclipz.get_pinned_count()
+        if pinned_count > 0:
+            self.pinned_count_label = ctk.CTkLabel(
+                self.footer_frame,
+                text=f"Pinned: {pinned_count} items",
+                font=ctk.CTkFont(size=12),
+                text_color="gray"
+            )
+            self.pinned_count_label.pack(side="left")
+        else:
+            self.pinned_count_label = None
+
         ctk.CTkLabel(
             self.footer_frame,
             text="Ctrl+1-0 to paste",
