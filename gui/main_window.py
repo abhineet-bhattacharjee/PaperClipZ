@@ -138,7 +138,29 @@ class MainWindow(ctk.CTk):
             self.cards.append(card)
 
     def refresh_view(self):
-        pass
+        history = self.paperclipz.storage.history
+
+        self.clear_cards()
+        self.render_cards(history)
+
+        self.sort_mode_label.configure(text=f"{self.paperclipz.get_sort_mode().title()} Sort")
+        self.total_items_label.configure(text=f"Total items: {self.paperclipz.get_total_items()} items")
+
+        pinned_count = self.paperclipz.get_pinned_count()
+        if pinned_count > 0:
+            if self.pinned_count_label:
+                self.pinned_count_label.configure(text=f"Pinned: {pinned_count} items")
+            else:
+                self.pinned_count_label = ctk.CTkLabel(
+                    self.footer_frame,
+                    text=f"Pinned: {pinned_count} items",
+                    font=ctk.CTkFont(size=12),
+                    text_color="gray"
+                )
+                self.pinned_count_label.pack(side="left")
+        elif self.pinned_count_label:
+            self.pinned_count_label.destroy()
+            self.pinned_count_label = None
 
     def show_window(self):
         self.deiconify()
