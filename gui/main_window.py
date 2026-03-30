@@ -82,11 +82,14 @@ class MainWindow(ctk.CTk):
 
         self.hotkey_label = ctk.CTkLabel(
             self.footer_frame,
-            text="⌨️ Ctrl+1-9,0: Paste • Ctrl+P: Pin",
+            text="⌨️ Ctrl+1-0: Paste | Ctrl+P: Pin",
             font=ctk.CTkFont(size=12),
             text_color="gray"
         )
         self.hotkey_label.pack(side="right")
+
+    def clear_cards(self):
+        pass
 
     def show_window(self):
         self.deiconify()
