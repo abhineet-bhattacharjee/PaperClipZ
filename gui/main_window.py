@@ -113,6 +113,30 @@ class MainWindow(ctk.CTk):
             if len(text) > 200:
                 preview += "..."
 
+            pin_indicator = "📌 " if item.get("pinned") else ""
+            paste_count = item.get("paste_count", 0)
+
+            if paste_count > 0:
+                metadata = f"{pin_indicator}Pasted {paste_count} times"
+            else:
+                metadata = f"{pin_indicator}Not pasted yet"
+
+            card_text = f"{preview}\n{metadata}"
+
+            card = ClipboardCard(
+                self.scrollable_frame,
+                text=card_text,
+                width=700,
+                height=80,
+                corner_radius=12,
+                fg_color="white",
+                text_color="black",
+                font=ctk.CTkFont(size=12)
+            )
+
+            card.pack(fill="x", pady=(0, 8))
+            self.cards.append(card)
+
     def show_window(self):
         self.deiconify()
         self.lift()
