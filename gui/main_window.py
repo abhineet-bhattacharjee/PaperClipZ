@@ -94,8 +94,24 @@ class MainWindow(ctk.CTk):
         self.cards.clear()
 
     def render_cards(self, history):
-        if __name__ == '__main__':
-            sorted_items = self.paperclipz.clipboard_manager.get_sorted_items(50)
+        sorted_items = self.paperclipz.clipboard_manager.get_sorted_items(50)
+
+        if not sorted_items:
+            no_items_label = ctk.CTkLabel(
+                self.scrollable_frame,
+                text="No clipboard history yet.",
+                font=ctk.CTkFont(size=14),
+                text_color="gray"
+            )
+            no_items_label.pack(expand=True, pady=50)
+            return
+
+        for item in sorted_items:
+            text = item.get("text", "")
+
+            preview = text.strip()[:200]
+            if len(text) > 200:
+                preview += "..."
 
     def show_window(self):
         self.deiconify()
