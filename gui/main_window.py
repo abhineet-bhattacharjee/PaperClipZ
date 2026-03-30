@@ -93,6 +93,10 @@ class MainWindow(ctk.CTk):
             card.destroy()
         self.cards.clear()
 
+    def render_cards(self, history):
+        if __name__ == '__main__':
+            sorted_items = self.paperclipz.clipboard_manager.get_sorted_items(50)
+
     def show_window(self):
         self.deiconify()
         self.lift()
