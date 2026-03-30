@@ -137,6 +137,9 @@ class MainWindow(ctk.CTk):
             card.pack(fill="x", pady=(0, 8))
             self.cards.append(card)
 
+    def refresh_view(self):
+        pass
+
     def show_window(self):
         self.deiconify()
         self.lift()
