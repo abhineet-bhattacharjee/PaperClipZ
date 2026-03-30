@@ -89,7 +89,9 @@ class MainWindow(ctk.CTk):
         self.hotkey_label.pack(side="right")
 
     def clear_cards(self):
-        pass
+        for card in self.cards:
+            card.destroy()
+        self.cards.clear()
 
     def show_window(self):
         self.deiconify()
